@@ -1,0 +1,52 @@
+openapi: 3.0.1
+info:
+  title: Drive Files Processor API
+  version: "1.0"
+  description: Retrieves Google Drive files by date and processes CSV data using OpenAI.
+servers:
+  - url: https://script.googleusercontent.com/a/macros/torchedproducts.com/echo?user_content_key=mFkra_jIXbObWD_uDcpLPVwwzuFcbotmWOX1AqLa0SiwWJdsRWsvhDnNEiFhxYgabu1mWsHXPGskbOiX-1HrNBkJd6g-iMDbOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKAndpZgU0_dizmCIPjztBqnqxvnOnfpkEmHwklkWyWOSENsY4ZCf5cuKAe9azaza1JCQKZw3Ug6TxwQJmIl2PelVW1vK4rz2uYtZx9zPng3VCpgtn-m_9SiOpz0aSq73Lr2-z39V-xN9DL9IlHgA9Gli_5ABb_2fEneqT7ezW3bPfN2zg-DCAvPBY5DCMaLNytw_f_oHoCa198cHFCXydV3t6exQ2H84Uxn50P2cQSOvw0zqdmwUxpolxlhC6PjsZA
+paths:
+  /:
+    get:
+      summary: Retrieve and process files from a Google Drive folder.
+      parameters:
+        - name: folderId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The ID of the Google Drive folder.
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date in YYYY-MM-DD format.
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date in YYYY-MM-DD format.
+      responses:
+        '200':
+          description: A JSON array of file responses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    file:
+                      type: string
+                    response:
+                      type: string
+                    error:
+                      type: string
+        '400':
+          description: Missing or invalid parameters.
+        '500':
+          description: Internal server error.
